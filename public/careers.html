@@ -146,6 +146,9 @@ input:checked + .slider:before {
 </head><body>
 <nav class="container">
     <a href="index.html"><img src="assets/images/vostola-logo.png" alt="Logo"/></a>
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open menu">☰</button>
+
     <div>
       <a href="newsletter.html">Newsletter</a>
       <a href="cryptofraud.html">AI Agent</a>
@@ -313,6 +316,15 @@ window.addEventListener('DOMContentLoaded', () => {
   authBtn.onclick = () => location.href = 'login.html';
 });
 </script>
+
+<script>
+  document.getElementById('nav-toggle')
+    .addEventListener('click', () => {
+      document.querySelector('.nav-links')
+        .classList.toggle('open');
+    });
+</script>
+
 
 
 </body>
