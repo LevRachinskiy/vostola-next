@@ -7,18 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
     /* ─────────────────────────────────────────────────────────────── */
-    /* Make the page a flex‐column so footer sits at the very bottom */
-    html, body {
-      height: 100%;
-      margin: 0;
+    /* Only the content area (.page) is flex, nav remains normal */
+    .page {
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
-    main {
-      flex: 1;             /* take all remaining space above the footer */
+    .page > main {
+      flex: 1;
     }
     footer {
-      margin-top: auto;    /* push the footer to the bottom */
       padding: 2rem 1rem;
       font-size: 0.8rem;
       color: #999;
@@ -27,7 +25,6 @@
     }
     /* ─────────────────────────────────────────────────────────────── */
 
-    /* Nav background mesh */
     nav {
       display: flex;
       align-items: center;
@@ -38,61 +35,64 @@
       background: rgba(13,13,13,0.85);
       z-index: 10;
     }
-    
     :root {
-      --bg-start: #0d0d0d;
-      --bg-end:   #1a1a1a;
-      --accent-start: #ffd700;
-      --accent-end:   #ff9900;
-      --text:     #ffffff;
-      --muted:    #777777;
-      --card-bg:  #262626;
-      --border:   #444444;
+      --bg-start: #0d0d0d; --bg-end: #1a1a1a;
+      --accent-start: #ffd700; --accent-end: #ff9900;
+      --text: #ffffff; --muted: #777777;
+      --card-bg: #262626; --border: #444444;
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family:'Inter',sans-serif;
-      background: url('assets/images/BG1.png') center/cover no-repeat, linear-gradient(180deg,var(--bg-start),var(--bg-end));
+      background:
+        url('assets/images/BG1.png') center/cover no-repeat,
+        linear-gradient(180deg,var(--bg-start),var(--bg-end));
       color: var(--text);
       overflow-x: hidden;
     }
     .container {
-  max-width: 1200px;
-  margin: 0 auto;    /* only center horizontally */
-  padding: 1rem;
-  position: relative;
-}
-
-
-    /* NAV with mesh background */
+      max-width:1200px; margin:0 auto; padding:1rem; position:relative;
+    }
     nav img { height:55px; }
-    nav a { color:var(--text); text-decoration:none; margin:0 .75rem; font-weight:500; position: relative; }
-    nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:0; background:var(--accent-start); transition:width .3s; }
+    nav a {
+      color:var(--text); text-decoration:none; margin:0 .75rem;
+      font-weight:500; position:relative;
+    }
+    nav a::after {
+      content:''; position:absolute; left:0; bottom:-4px;
+      height:2px; width:0; background:var(--accent-start);
+      transition:width .3s;
+    }
     nav a:hover::after, nav a.active::after { width:100%; }
     .btn {
       padding:.6rem 1rem; border-radius:4px; text-transform:uppercase;
       cursor:pointer; font-weight:600; border:none;
-      background: linear-gradient(90deg,var(--accent-start),var(--accent-end));
+      background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
       color:#000; transition:filter .2s;
     }
     .btn:hover { filter: brightness(1.1); }
 
-    /* HERO */
     .hero {
       display:grid; grid-template-columns:1fr 1fr; align-items:center;
-      gap:2rem; height:80vh; position:relative; overflow:hidden;
+      gap:2rem; position:relative; overflow:hidden; padding:4rem 0;
     }
-    .mesh { position:absolute; inset:0; background:url('assets/images/vostolabackground.png') center/cover no-repeat; opacity:0.3; pointer-events:none; }
+    .mesh {
+      position:absolute; inset:0;
+      background:url('assets/images/vostolabackground.png') center/cover no-repeat;
+      opacity:0.3; pointer-events:none;
+    }
     .hero-left { z-index:1; }
-    .hero h1 { font-size:3rem; line-height:1.1; margin-bottom:.5rem; }
-    .gradient-text { background:linear-gradient(90deg,var(--accent-start),var(--accent-end)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .hero-logo { max-width:350px; display:block; margin:auto; z-index:1; }
+    .hero h1 { font-size:2.5rem; margin-bottom:.5rem; }
+    .gradient-text {
+      background:linear-gradient(90deg,var(--accent-start),var(--accent-end));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .hero-logo { max-width:350px; margin:auto; display:block; z-index:1; }
 
-    /* Subscribe form */
     .subscribe-form { margin-top:2rem; display:flex; gap:.5rem; }
     .subscribe-form input {
-      flex:1; padding:.5rem; border-radius:4px; border:1px solid var(--border);
-      background:transparent; color:var(--text);
+      flex:1; padding:.5rem; border-radius:4px;
+      border:1px solid var(--border); background:transparent; color:var(--text);
       transition: box-shadow .3s, border-color .3s;
     }
     .subscribe-form input:focus {
@@ -100,40 +100,35 @@
       border-color: var(--accent-start);
       box-shadow: 0 0 0 2px rgba(255,217,0,0.5);
     }
-    .subscribe-form button { white-space:nowrap; }
 
-    /* FEATURES */
-    .features { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2rem; }
-    .feature-card {
-      background: var(--card-bg); border:1px solid var(--border); border-radius:8px;
-      padding:1.5rem; width:300px; text-align:center; transition:transform .3s,filter .3s;
+    .features {
+      display:flex; gap:1rem; justify-content:center;
+      flex-wrap:wrap; margin-top:2rem;
     }
-    .feature-card:hover { transform:translateY(-5px); filter:brightness(1.1); }
-    .feature-icon { width:64px; height:64px; object-fit:contain; margin-bottom:.75rem; }
+    .feature-card {
+      background:var(--card-bg); border:1px solid var(--border);
+      border-radius:8px; padding:1.5rem; width:300px; text-align:center;
+      transition:transform .3s,filter .3s;
+    }
+    .feature-card:hover {
+      transform:translateY(-5px); filter:brightness(1.1);
+    }
+    .feature-icon {
+      width:64px; height:64px; object-fit:contain; margin-bottom:.75rem;
+    }
     .feature-card h3 { margin-bottom:.5rem; font-size:1.25rem; }
     .feature-card p { color:var(--muted); font-size:.95rem; }
 
-    /* FADE-IN */
-    .fade { opacity:0; transform:translateY(20px); transition:all .8s ease; }
+    .fade {
+      opacity:0; transform:translateY(20px);
+      transition:all .8s ease;
+    }
     .fade.visible { opacity:1; transform:none; }
 
     @media(max-width:768px){
-      .hero{grid-template-columns:1fr; text-align:center; height:auto; padding:4rem 0;}
-      .features{flex-direction:column; align-items:center;}
+      .hero { grid-template-columns:1fr; text-align:center; }
+      .features { flex-direction:column; align-items:center; }
     }
-
-    /* Toggle switch */
-    .switch { position: relative; display: inline-block; width: 50px; height: 24px; margin-right: 1rem; vertical-align: middle; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-    input:checked + .slider { background-color: var(--accent-start); }
-    input:checked + .slider:before { transform: translateX(26px); }
-
-    /* Payment modal */
-    #payment-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
-    #payment-modal { background: rgba(13,13,13,0.95); padding: 2rem; border-radius: 8px; max-width: 400px; width: 90%; color: var(--text); }
-    #payment-modal input { width: 100%; margin-bottom: 1rem; }
   </style>
 </head>
 <body>
@@ -150,71 +145,78 @@
     <button id="auth-btn" class="btn">Log in / Sign up</button>
   </nav>
 
-  <main class="container">
-    <section class="fade">
-      <h1>Vostola Agent</h1>
-      <p style="margin:1rem 0; color:var(--muted); text-align:center;">
-        Do you have a cryptocurrency you want our models to analyze? Our AI Agent can help you with insights on it.
-        Free users can now use it twice a week, Premium members have up to 10 requests. We are working hard to lower our processing costs in the near future.
-      </p>
+  <div class="page">
+    <main class="container">
+      <section class="fade">
+        <h1>Vostola Agent</h1>
+        <p style="margin:1rem 0; color:var(--muted); text-align:center;">
+          Do you have a cryptocurrency you want our models to analyze?
+          Our AI Agent can help you with insights on it. Free users can now use it twice a week;
+          Premium members have up to 10 requests. We are working hard to lower our processing costs
+          in the near future.
+        </p>
+        <div id="chat-container" class="fade"
+             style="max-height:300px;overflow-y:auto;background:rgba(255,255,255,0.1);
+                    backdrop-filter:blur(8px);padding:1rem;border-radius:8px;">
+        </div>
+        <form id="chat-form" style="margin-top:1rem;display:flex;gap:.5rem;">
+          <input type="text" id="chat-input" placeholder="Ask me..."
+                 style="flex:1;padding:.5rem;border-radius:4px;border:1px solid var(--muted);
+                        background:transparent;color:var(--text);"/>
+          <button class="btn">Send</button>
+        </form>
+      </section>
+    </main>
 
-      <div id="chat-container" class="fade"
-           style="max-height:300px;overflow-y:auto;background:rgba(255,255,255,0.1);
-                  backdrop-filter:blur(8px);padding:1rem;border-radius:8px;"></div>
-      <form id="chat-form" style="margin-top:1rem;display:flex;gap:.5rem;">
-        <input type="text" id="chat-input" placeholder="Ask me..."
-               style="flex:1;padding:.5rem;border-radius:4px;border:1px solid var(--muted);
-                      background:transparent;color:var(--text);"/>
-        <button class="btn">Send</button>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <strong>Disclaimer:</strong>
-    Vostola provides algorithmic analysis tools only. We are not registered financial advisors,
-    and nothing on this page constitutes investment, trading, or financial advice. All
-    investment decisions remain solely your responsibility. Past performance does not
-    guarantee future results.
-  </footer>
+    <footer>
+      <strong>Disclaimer:</strong>
+      Vostola provides algorithmic analysis tools only. We are not registered
+      financial advisors, and nothing on this page constitutes investment,
+      trading, or financial advice. All investment decisions remain solely
+      your responsibility. Past performance does not guarantee future results.
+    </footer>
+  </div>
 
   <script>
+    // Chat form
     document.getElementById('chat-form').addEventListener('submit', e=>{
       e.preventDefault();
-      const inp=document.getElementById('chat-input'),
-            cont=document.getElementById('chat-container');
-      const ub=document.createElement('div');
-      ub.textContent = inp.value;
-      ub.style.cssText = 'background:#444;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;align-self:flex-end;';
-      cont.appendChild(ub);
-      const bb=document.createElement('div');
-      bb.textContent = 'Processing...';
-      bb.style.cssText = 'background:#555;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;';
-      cont.appendChild(bb);
-      inp.value='';
-      setTimeout(()=>bb.textContent='Token appears safe.',800);
+      const inp = document.getElementById('chat-input'),
+            cont = document.getElementById('chat-container');
+      const userMsg = document.createElement('div');
+      userMsg.textContent = inp.value;
+      userMsg.style.cssText = 'background:#444;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;align-self:flex-end;';
+      cont.appendChild(userMsg);
+      const botMsg = document.createElement('div');
+      botMsg.textContent = 'Processing...';
+      botMsg.style.cssText = 'background:#555;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;';
+      cont.appendChild(botMsg);
+      inp.value = '';
+      setTimeout(()=> botMsg.textContent = 'Token appears safe.', 800);
     });
-  </script>
 
-  <script>
-    const faders=document.querySelectorAll('.fade');
-    const onScroll=()=>{ faders.forEach(el=>{
-      const r=el.getBoundingClientRect();
-      if(r.top<window.innerHeight*0.85) el.classList.add('visible');
-    }); };
-    window.addEventListener('scroll',onScroll);
-    window.addEventListener('load',onScroll);
-  </script>
+    // Fade‑in on scroll
+    const fades = document.querySelectorAll('.fade');
+    function reveal(){
+      fades.forEach(el=>{
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const path = window.location.pathname.split('/').pop();
-      document.querySelectorAll('nav a').forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === path);
+    // Dynamic nav link highlighting
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const current = window.location.pathname.split('/').pop();
+      document.querySelectorAll('nav a').forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href') === current);
       });
     });
   </script>
 
+  <!-- Payment modal markup -->
   <div id="payment-modal-backdrop">
     <div id="payment-modal">
       <h3>Upgrade to Premium</h3>
@@ -224,21 +226,19 @@
         <input type="text" id="card-expiry" placeholder="MM/YY" required />
         <input type="text" id="card-cvc" placeholder="CVC" required />
         <button type="submit" class="btn">Pay</button>
-        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">
-          Cancel
-        </button>
+        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
       </form>
     </div>
   </div>
-
   <script>
+    // Premium toggle
     const premiumToggle = document.getElementById('premium-toggle');
-    const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
-    if(user.isPremium) premiumToggle.checked = true;
-    premiumToggle.addEventListener('change', ()=>{
-      if(premiumToggle.checked && !user.isPremium) {
-        document.getElementById('payment-modal-backdrop').style.display='flex';
-      } else if(!premiumToggle.checked && user.isPremium) {
+    const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+    if (user.isPremium) premiumToggle && (premiumToggle.checked = true);
+    premiumToggle && premiumToggle.addEventListener('change', ()=>{
+      if (premiumToggle.checked && !user.isPremium) {
+        document.getElementById('payment-modal-backdrop').style.display = 'flex';
+      } else if (!premiumToggle.checked && user.isPremium) {
         user.isPremium = false;
         localStorage.setItem('vostolaUser', JSON.stringify(user));
         location.reload();
@@ -248,27 +248,22 @@
       e.preventDefault();
       user.isPremium = true;
       localStorage.setItem('vostolaUser', JSON.stringify(user));
-      document.getElementById('payment-modal-backdrop').style.display='none';
+      document.getElementById('payment-modal-backdrop').style.display = 'none';
       location.reload();
     });
     document.getElementById('payment-cancel').addEventListener('click', ()=>{
-      premiumToggle.checked = false;
-      document.getElementById('payment-modal-backdrop').style.display='none';
+      premiumToggle && (premiumToggle.checked = false);
+      document.getElementById('payment-modal-backdrop').style.display = 'none';
     });
-  </script>
 
-  <script>
-    document.getElementById('auth-btn').onclick = ()=> window.location.href='login.html';
-  </script>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', ()=>{
-      const authBtn = document.getElementById('auth-btn');
-      const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
-      authBtn.textContent = user.email
-        ? `${user.email} (${user.isPremium?'Premium':'Free'})`
+    // Auth button
+    const authBtn = document.getElementById('auth-btn');
+    authBtn.addEventListener('click', ()=> location.href = 'login.html');
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const userData = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+      authBtn.textContent = userData.email
+        ? `${userData.email} (${userData.isPremium ? 'Premium' : 'Free'})`
         : 'Log in / Sign up';
-      authBtn.onclick = ()=> location.href='login.html';
     });
   </script>
 </body>
