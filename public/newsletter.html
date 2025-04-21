@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vostola • Newsletter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-start: #0d0d0d;
+      --bg-end:   #1a1a1a;
+      --accent-start: #ffd700;
+      --accent-end:   #ff9900;
+      --text:     #ffffff;
+      --muted:    #777777;
+      --card-bg:  #262626;
+      --border:   #444444;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Inter',sans-serif;
+      background: url('assets/images/BG1.png') center/cover no-repeat, linear-gradient(180deg,var(--bg-start),var(--bg-end));
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    .container { max-width:1200px; margin:auto; padding:1rem; }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      background: rgba(13,13,13,0.85);
+      position: sticky;
+      top:0; z-index:10;
+    }
+    nav img { height:55px; }
+    nav a { color:var(--text); text-decoration:none; margin:0 .75rem; font-weight:500; position:relative; }
+    nav a::after { content:''; position:absolute; left:0; bottom:-4px; height:2px; width:0; background:var(--accent-start); transition:width .3s; }
+    nav a:hover::after, nav a.active::after { width:100%; }
+    .btn { padding:.6rem 1rem; border:none; border-radius:4px; text-transform:uppercase; font-weight:600; cursor:pointer; background: linear-gradient(90deg,var(--accent-start),var(--accent-end)); color:#000; transition:filter .2s; }
+    .btn:hover { filter:brightness(1.1); }
+
+    .fade { opacity:0; transform:translateY(20px); transition:all .8s ease; }
+    .fade.visible { opacity:1; transform:none; }
+
+    /* Newsletter grid and cards */
+    .newsletter-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:2rem; }
+    .card {
+      background: var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:1.5rem;
+      cursor:pointer;
+      position:relative;
+      transition:transform .3s,filter .3s;
+    }
+    .card:hover { transform:translateY(-5px); filter:brightness(1.1); }
+    .card h3 { margin-bottom:.5rem; }
+    .card p { color:var(--muted); font-size:.95rem; margin-bottom:1rem; }
+
+    dialog { width:90%; max-width:600px; background:rgba(13,13,13,0.95); border:none; border-radius:8px; padding:1.5rem; color:var(--text); backdrop-filter:blur(4px); }
+    dialog::backdrop { background:rgba(0,0,0,0.7); }
+    .premium-section { position:relative; }
+    .premium-blur { filter:blur(4px); pointer-events:none; }
+    .premium-overlay {
+      position:absolute; top:0; left:0; right:0; bottom:0;
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(0,0,0,0.5); color:#fff; font-weight:600;
+      font-size:1rem; border-radius:4px;
+    }
+  
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-start) !important;
+      box-shadow: 0 0 0 2px rgba(255,217,0,0.5) !important;
+      }
+    
+
+/* Toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 1rem;
+  vertical-align: middle;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px; width: 18px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--accent-start);
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Payment modal */
+#payment-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none; align-items: center; justify-content: center;
+  z-index: 2000;
+}
+#payment-modal {
+  background: rgba(13,13,13,0.95);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px; width: 90%;
+  color: var(--text);
+}
+#payment-modal input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+
+  /* Center newsletter modal/dialog */
+  dialog, .issue-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 540px;
+    width: 90%;
+    z-index: 1000;
+  }
+
+</style>
+</head>
+<body>
+  <nav class="container">
+    <a href="index.html"><img src="assets/images/vostola-logo.png" alt="Logo"/></a>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="cryptofraud.html">AI Agent</a>
+      <a href="market-access.html">Market Access</a>
+      <a href="careers.html">Careers</a>
+      <a href="about.html">About</a>
+    </div>
+    <button id="auth-btn" class="btn">Log in / Sign up</button>
+  </nav>
+
+  <main class="container">
+    <section class="fade" style="text-align:center; padding:2rem 0;">
+      <h1>Vostola Weekly Intelligence</h1>
+      <p>Stay ahead with expert market insights, free & premium.</p>
+      <form id="subscribe-form" style="margin-top:1rem; display:flex; justify-content:center; gap:.5rem;">
+        <input type="email" id="email-input" placeholder="Your email" required style="padding:.5rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--text);flex:1;max-width:300px;"/>
+        <button type="submit" class="btn">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- Newsletter Issues Grid -->
+    <section id="newsletter-grid" class="fade" style="display:none;">
+      <div class="newsletter-grid">
+        <div class="card" data-issue="1">
+          <h3>Issue #1 • April 20, 2025</h3>
+          <p>Top Market Insight & On-Chain Token Preview — click to read</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Issue 1 Dialog -->
+    <dialog id="issue1-dialog">
+      <h2>VOSTOLA WEEKLY INTELLIGENCE REPORT<br/><small>April 20, 2025</small></h2>
+      <!-- Content -->
+      <section>
+        <h3>🔍 Top Market Insight</h3>
+        <p>This week, Ethereum gas fees hit a 3-month low, suggesting a temporary slowdown in NFT and DeFi activity.</p>
+        <ul>
+          <li><strong>Gas:</strong> 8 Gwei avg (↓35%)</li>
+          <li><strong>Top 3 NFT projects:</strong> 50% volume drop</li>
+        </ul>
+      </section>
+      <section>
+        <h3>📈 On-Chain Token to Watch</h3>
+        <p><strong>Token:</strong> $JOLT</p>
+        <ul>
+          <li>Smart money inflows detected</li>
+          <li>Liquidity +28% on Uniswap</li>
+          <li>Dev wallet inactive 2 months 🔒</li>
+        </ul>
+      </section>
+      <section>
+        <h3>🧠 Vostola Score Snapshot</h3>
+        <ul>
+          <li>Risk: Low</li>
+          <li>Momentum: High</li>
+          <li>Devs: Verified</li>
+          <li>Liquidity Lock: 365 days</li>
+          <li>Audit: None ⚠️</li>
+        </ul>
+      </section>
+      <hr/>
+      <!-- Premium Breakdown (blur for free users) -->
+      <section class="premium-section">
+        <div id="premium-content">
+          <h3>🔓 PREMIUM BREAKDOWN</h3>
+          <ul>
+            <li>Smart Contract Review: Clean, no honeypots or backdoors.</li>
+            <li>Wallet Clustering: 82% of $JOLT trades trace back to 3 whales.</li>
+            <li>Social Sentiment: 8.3/10 from 24h Twitter scan.</li>
+            <li>CEX Listing Probability: Medium (Bitget, MEXC detected).</li>
+          </ul>
+          <p><strong>🧠 Recommendation:</strong> Medium-term hold; upside if DeFi rebounds.</p>
+        </div>
+      </section>
+      <div style="text-align:right; margin-top:1rem;">
+        <button class="btn" onclick="document.getElementById('issue1-dialog').close()">Close</button>
+      </div>
+    </dialog>
+  </main>
+
+  <script>
+    // Fade-in
+    const fades = document.querySelectorAll('.fade');
+    function reveal() { fades.forEach(el=>{ if(el.getBoundingClientRect().top < window.innerHeight*0.85) el.classList.add('visible'); }); }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+
+    // Subscription & display grid
+    document.getElementById('subscribe-form').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('newsletter-grid').style.display = 'block';
+      localStorage.setItem('vostolaUser', JSON.stringify({ email: document.getElementById('email-input').value, isPremium: false }));
+      applyBlur();
+    });
+
+    // Auth button logic
+    const authBtn = document.getElementById('auth-btn');
+    const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+    if(user.email) {
+      authBtn.textContent = `${user.email} (Free)`;
+      
+      document.getElementById('newsletter-grid').style.display='block';
+      applyBlur();
+    } else {
+      
+    }
+
+    // Issue card click
+    document.querySelector('.card[data-issue="1"]').onclick = () => document.getElementById('issue1-dialog').showModal();
+
+    // Blur premium section if not premium
+    function applyBlur() {
+      const u = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+      const premiumSec = document.querySelector('#premium-content');
+      if(!u.isPremium) {
+        premiumSec.classList.add('premium-blur');
+        const overlay = document.createElement('div');
+        overlay.className = 'premium-overlay';
+        overlay.textContent = 'Unlock Premium to view full insights';
+        premiumSec.parentNode.appendChild(overlay);
+      }
+    }
+  </script>
+
+<div id="payment-modal-backdrop">
+  <div id="payment-modal">
+    <h3>Upgrade to Premium</h3>
+    <form id="payment-form">
+      <input type="text" id="card-name" placeholder="Name on Card" required />
+      <input type="text" id="card-number" placeholder="Card Number" required />
+      <input type="text" id="card-expiry" placeholder="MM/YY" required />
+      <input type="text" id="card-cvc" placeholder="CVC" required />
+      <button type="submit" class="btn">Pay</button>
+      <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
+    </form>
+  </div>
+</div>
+<script>
+// Premium toggle
+const premiumToggle = document.getElementById('premium-toggle');
+const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+if (user.isPremium) {
+  premiumToggle.checked = true;
+}
+premiumToggle.addEventListener('change', () => {
+  if (premiumToggle.checked && (!user.isPremium)) {
+    document.getElementById('payment-modal-backdrop').style.display = 'flex';
+  } else if (!premiumToggle.checked && user.isPremium) {
+    user.isPremium = false;
+    localStorage.setItem('vostolaUser', JSON.stringify(user));
+    location.reload();
+  }
+});
+// Payment form
+document.getElementById('payment-form').addEventListener('submit', e => {
+  e.preventDefault();
+  // Simulate payment
+  user.isPremium = true;
+  localStorage.setItem('vostolaUser', JSON.stringify(user));
+  document.getElementById('payment-modal-backdrop').style.display = 'none';
+  location.reload();
+});
+document.getElementById('payment-cancel').addEventListener('click', () => {
+  premiumToggle.checked = false;
+  document.getElementById('payment-modal-backdrop').style.display = 'none';
+});
+</script>
+
+<script>
+  // Always direct auth button to login page
+  document.getElementById('auth-btn').onclick = () => {
+    window.location.href = 'login.html';
+  };
+</script>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const authBtn = document.getElementById('auth-btn');
+  const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+  if (user.email) {
+    authBtn.textContent = `${user.email} (${user.isPremium ? 'Premium' : 'Free'})`;
+  } else {
+    authBtn.textContent = 'Log in / Sign up';
+  }
+  authBtn.onclick = () => location.href = 'login.html';
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Vostola Next.js App
+
+This project wraps your existing static site in a modern **Next.js** setup so you can start iterating fast.
+
+## Quick Start
+
+```bash
+unzip vostola_next.zip
+cd vostola-next
+npm install
+npm run dev
+```
+
+Then open <http://localhost:3000> in your browser.
+
+## What Happened?
+
+* Your original static files now live in **/public** — Next serves them directly.
+* The homepage (`pages/index.js`) renders your existing `index.html` inside an `<iframe>` so everything looks exactly the same out‑of‑the‑box.
+* Start replacing pieces of the iframe with real React components whenever you‘re ready.
+
+Happy building!
