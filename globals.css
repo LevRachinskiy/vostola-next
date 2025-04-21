@@ -3,7 +3,7 @@
 /* 1) Import Inter from Google */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* 2) Define your theme variables */
+/* 2) Theme variables */
 :root {
   --bg-start:     #0d0d0d;
   --bg-end:       #1a1a1a;
@@ -24,7 +24,7 @@
 
 /* 4) Dark background + no white‑flash on overscroll */
 html {
-  /* allow the page to grow beyond one screen */
+  /* allow the background to cover the whole content height */
   min-height: 100vh;
 
   /* keep your existing background */
@@ -34,24 +34,19 @@ html {
 
   /* prevent the white flash on bounce */
   overscroll-behavior-y: contain;
-}
 
-
-  /* 5) White text & Inter font */
+  /* 5) White text & Inter font for everything under html */
   color: var(--text);
   font-family: 'Inter', sans-serif;
 }
 
+/* 6) Let body be transparent so html’s background shows through & stretch */
 body {
-  /* let html’s background shine through */
   background: transparent;
-
-  /* make sure it’s at least viewport height */
   min-height: 100vh;
 }
 
-
-/* 7) Force Inter + white text everywhere (even over inline rules) */
+/* 7) Force Inter + white text everywhere, outranking inline CSS */
 html, body, nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
