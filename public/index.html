@@ -34,17 +34,12 @@
       --border:   #444444;
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html, body {
-  height: 100%;
-  margin: 0;
-  background:
-    url('assets/images/BG1.png') center/cover no‑repeat,
-    linear‑gradient(180deg,var(--bg-start),var(--bg-end));
-  color: var(--text);
-  overflow-x: hidden;
-}
-
-
+    body {
+      font-family:'Inter',sans-serif;
+      background: url('assets/images/BG1.png') center/cover no-repeat, linear-gradient(180deg,var(--bg-start),var(--bg-end));
+      color: var(--text);
+      overflow-x: hidden;
+    }
     .container { max-width:1200px; margin:auto; padding:1rem; position: relative; }
 
     /* NAV with mesh background */
@@ -198,12 +193,7 @@ input:checked + .slider:before {
   <main class="container">
     <section class="hero fade">
       <div class="hero-left">
-        <h1>
-          Intelligent Algorithms<br/>
-          For The<br/>
-          Digital Assets Market
-        </h1>
-        
+        <h1>Algorithms meet<br/><span class="gradient-text">digital asset</span><br/>markets</h1>
         <p>Bridging cutting‑edge quant research and real‑time execution.</p>
         <form id="hero-subscribe" class="subscribe-form">
           <input type="email" id="hero-email" placeholder="Your email"/>
