@@ -6,15 +6,6 @@
   <title>Vostola</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 
-  /* chat‐input yellow glow on focus */
-#chat-input {
-  transition: border-color .3s, box-shadow .3s;
-}
-#chat-input:focus {
-  outline: none;
-  border: 1px solid var(--accent-start);
-  box-shadow: 0 0 0 2px rgba(255,217,0,0.5);
-}
 
   <style>
     /* ─────────────────────────────────────────────────────────────── */
@@ -34,6 +25,15 @@
       text-align: center;
       background: rgba(0,0,0,0.6);
     }
+
+    #chat-input {
+    transition: border-color .3s, box-shadow .3s;
+  }
+  #chat-input:focus {
+    outline: none;
+    border: 1px solid var(--accent-start);
+    box-shadow: 0 0 0 2px rgba(255,217,0,0.5);
+  }
     /* ─────────────────────────────────────────────────────────────── */
 
     nav {
