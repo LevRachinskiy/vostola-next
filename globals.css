@@ -1,47 +1,58 @@
-/* public/assets/css/global.css */
+/* globals.css (root of your project) */
 
-/* 1) Import Inter font */
+/* 1) Import Inter from Google */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+/* 2) Define your theme variables */
 :root {
   --bg-start:     #0d0d0d;
   --bg-end:       #1a1a1a;
   --text:         #ffffff;
-  --muted:        #777777;
   --accent-start: #ffd700;
   --accent-end:   #ff9900;
+  --muted:        #777777;
   --card-bg:      #262626;
   --border:       #444444;
 }
 
-/* 2) Global reset */
+/* 3) Global reset */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 3) Background + no white‑flash overscroll */
+/* 4) Dark background + no white‑flash on overscroll */
 html {
-  height: 100%;
+  /* allow the page to grow beyond one screen */
+  min-height: 100vh;
+
+  /* keep your existing background */
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
-  overscroll-behavior-y: contain;
 
-  /* 4) Global text color & font */
+  /* prevent the white flash on bounce */
+  overscroll-behavior-y: contain;
+}
+
+
+  /* 5) White text & Inter font */
   color: var(--text);
   font-family: 'Inter', sans-serif;
 }
 
-/* 5) Let body be transparent */
 body {
+  /* let html’s background shine through */
   background: transparent;
+
+  /* make sure it’s at least viewport height */
+  min-height: 100vh;
 }
 
-/* Force Inter + white everywhere, outranking inline styles */
+
+/* 7) Force Inter + white text everywhere (even over inline rules) */
 html, body, nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
 }
-
