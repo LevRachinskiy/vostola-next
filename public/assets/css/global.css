@@ -1,130 +1,46 @@
-/* globals.css (root of your project) */
+/* globals.css (root) */
 
-/* 1) Import Inter from Google */
+/* 1) Import Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* 2) Theme variables */
+/* 2) Theme vars */
 :root {
   --bg-start:     #0d0d0d;
   --bg-end:       #1a1a1a;
   --text:         #ffffff;
-  --muted:        #777777;
   --accent-start: #ffd700;
   --accent-end:   #ff9900;
+  --muted:        #777777;
   --card-bg:      #262626;
   --border:       #444444;
 }
 
-/* 3) Global reset */
+/* 3) Reset */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 4) Dark background + no white‑flash on overscroll */
-html {
-  /* ensure the background covers the full scrollable area */
-  min-height: 100vh;
+/* 4) Make html/body full‑height & contain overscroll */
+html, body {
+  height: 100%;
+  overscroll-behavior-y: contain;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
 
-  /* your background image + gradient */
+/* 5) Move the background onto body so it never runs out */
+body {
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
-
-  /* prevent overscroll white flash */
-  overscroll-behavior-y: contain;
-
-  /* white text & Inter font for all descendants */
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
+  background-attachment: fixed;
+  min-height: 100%;
 }
 
-/* 5) Transparent body and block overscroll */
-body {
-  background: transparent;
-  min-height: 100vh;
-  overscroll-behavior-y: contain;
-}
-
-/* 6) Force Inter & white text everywhere, outranking inline CSS */
+/* 6) Force Inter+white everywhere */
 html, body, nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
-}
-/* ------------------ mobile nav toggle ------------------ */
-.nav-toggle {
-  display: none;
-  font-size: 1.5rem;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  cursor: pointer;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-/* mobile breakpoint */
-@media (max-width: 768px) {
-  .nav-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(13,13,13,0.95);
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem 0;
-    transform: translateY(-200%);
-    transition: transform 0.3s ease;
-    pointer-events: none;
-  }
-  .nav-links.open {
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  /* stack hero and features for narrow screens */
-  .hero {
-    grid-template-columns: 1fr !important;
-    text-align: center;
-    padding: 2rem 1rem;
-    height: auto;
-  }
-  .hero h1 {
-    font-size: 2rem;
-  }
-  .subscribe-form {
-    flex-direction: column;
-  }
-  .subscribe-form button {
-    width: 100%;
-  }
-  .features {
-    flex-direction: column;
-    gap: 2rem;
-  }
-  .feature-card {
-    width: 100%;
-  }
-}
-
-/* --------------- touch‑friendly sizing --------------- */
-.btn,
-.subscribe-form input,
-.nav-links a {
-  min-height: 3rem;
-  padding: 0.75rem 1rem;
-}
-body {
-  font-size: 1rem;
-  line-height: 1.5;
 }
