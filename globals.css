@@ -1,15 +1,47 @@
-/* app/globals.css */
+/* public/assets/css/global.css */
+
+/* 1) Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
 :root {
-  --bg-start: #0d0d0d;
-  --bg-end:   #1a1a1a;
+  --bg-start:     #0d0d0d;
+  --bg-end:       #1a1a1a;
+  --text:         #ffffff;
+  --muted:        #777777;
+  --accent-start: #ffd700;
+  --accent-end:   #ff9900;
+  --card-bg:      #262626;
+  --border:       #444444;
 }
+
+/* 2) Global reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 3) Background + no white‑flash overscroll */
 html {
   height: 100%;
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
   overscroll-behavior-y: contain;
+
+  /* 4) Global text color & font */
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
 }
+
+/* 5) Let body be transparent */
 body {
   background: transparent;
 }
+
+/* Force Inter + white everywhere, outranking inline styles */
+html, body, nav, nav a, .container, .hero, .features, footer {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text) !important;
+}
+
