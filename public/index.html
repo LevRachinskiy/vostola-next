@@ -159,6 +159,10 @@
     <a href="index.html">
       <img src="assets/images/vostola-logo.png" alt="Vostola Logo"/>
     </a>
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open menu">☰</button>
+
+    
     <div>
       <a href="newsletter.html">Newsletter</a>
       <a href="cryptofraud.html">AI Agent</a>
@@ -310,5 +314,14 @@
       });
     });
   </script>
+
+<script>
+  document.getElementById('nav-toggle')
+    .addEventListener('click', () => {
+      document.querySelector('.nav-links')
+        .classList.toggle('open');
+    });
+</script>
+
 </body>
 </html>
