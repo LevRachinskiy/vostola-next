@@ -133,7 +133,6 @@ input:checked + .slider:before {
   <nav class="container">
     <a href="index.html"><img src="assets/images/vostola-logo.png" alt="Logo"/></a>
     <div>
-      <a href="index.html">Home</a>
       <a href="newsletter.html">Newsletter</a>
       <a href="cryptofraud.html">AI Agent</a>
       <a href="market-access.html">Market Access</a>
@@ -258,6 +257,14 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   authBtn.onclick = () => location.href = 'login.html';
 });
+</script>
+
+<script>
+  document.getElementById('nav-toggle')
+    .addEventListener('click', () => {
+      document.querySelector('.nav-links')
+        .classList.toggle('open');
+    });
 </script>
 
 
