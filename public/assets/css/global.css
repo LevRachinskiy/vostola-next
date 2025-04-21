@@ -3,14 +3,14 @@
 /* 1) Import Inter from Google */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* 2) Define your theme variables */
+/* 2) Theme variables */
 :root {
   --bg-start:     #0d0d0d;
   --bg-end:       #1a1a1a;
   --text:         #ffffff;
+  --muted:        #777777;
   --accent-start: #ffd700;
   --accent-end:   #ff9900;
-  --muted:        #777777;
   --card-bg:      #262626;
   --border:       #444444;
 }
@@ -24,23 +24,30 @@
 
 /* 4) Dark background + no white‑flash on overscroll */
 html {
-  height: 100%;
+  /* ensure the background covers the full scrollable area */
+  min-height: 100vh;
+
+  /* your background image + gradient */
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
+
+  /* prevent overscroll white flash */
   overscroll-behavior-y: contain;
 
-  /* 5) White text & Inter font */
+  /* white text & Inter font for all descendants */
   color: var(--text);
   font-family: 'Inter', sans-serif;
 }
 
-/* 6) Make body transparent so html’s background shows */
+/* 5) Transparent body and block overscroll */
 body {
   background: transparent;
+  min-height: 100vh;
+  overscroll-behavior-y: contain;
 }
 
-/* 7) Force Inter + white text everywhere (even over inline rules) */
+/* 6) Force Inter & white text everywhere, outranking inline CSS */
 html, body, nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;

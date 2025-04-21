@@ -8,9 +8,9 @@
   --bg-start:     #0d0d0d;
   --bg-end:       #1a1a1a;
   --text:         #ffffff;
+  --muted:        #777777;
   --accent-start: #ffd700;
   --accent-end:   #ff9900;
-  --muted:        #777777;
   --card-bg:      #262626;
   --border:       #444444;
 }
@@ -24,29 +24,30 @@
 
 /* 4) Dark background + no white‑flash on overscroll */
 html {
-  /* allow the background to cover the whole content height */
+  /* ensure the background covers the full scrollable area */
   min-height: 100vh;
 
-  /* keep your existing background */
+  /* your background image + gradient */
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
 
-  /* prevent the white flash on bounce */
+  /* prevent overscroll white flash */
   overscroll-behavior-y: contain;
 
-  /* 5) White text & Inter font for everything under html */
+  /* white text & Inter font for all descendants */
   color: var(--text);
   font-family: 'Inter', sans-serif;
 }
 
-/* 6) Let body be transparent so html’s background shows through & stretch */
+/* 5) Transparent body and block overscroll */
 body {
   background: transparent;
   min-height: 100vh;
+  overscroll-behavior-y: contain;
 }
 
-/* 7) Force Inter + white text everywhere, outranking inline CSS */
+/* 6) Force Inter & white text everywhere, outranking inline CSS */
 html, body, nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
