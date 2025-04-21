@@ -1,17 +1,47 @@
-/* assets/css/global.css */
+/* globals.css (root of your project) */
+
+/* 1) Import Inter from Google */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* 2) Define your theme variables */
 :root {
-  --bg-start: #0d0d0d;
-  --bg-end:   #1a1a1a;
+  --bg-start:     #0d0d0d;
+  --bg-end:       #1a1a1a;
+  --text:         #ffffff;
+  --accent-start: #ffd700;
+  --accent-end:   #ff9900;
+  --muted:        #777777;
+  --card-bg:      #262626;
+  --border:       #444444;
 }
 
+/* 3) Global reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 4) Dark background + no white‑flash on overscroll */
 html {
   height: 100%;
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
   overscroll-behavior-y: contain;
+
+  /* 5) White text & Inter font */
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
 }
 
+/* 6) Make body transparent so html’s background shows */
 body {
   background: transparent;
+}
+
+/* 7) Force Inter + white text everywhere (even over inline rules) */
+html, body, nav, nav a, .container, .hero, .features, footer {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text) !important;
 }
