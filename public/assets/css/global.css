@@ -62,3 +62,25 @@ input:focus, textarea:focus {
   border-color: var(--accent-start) !important;
   box-shadow: 0 0 0 2px rgba(255,217,0,0.5) !important;
 }
+
+/* 7) Nav link underline (transform‑based) */
+nav a {
+  position: relative;
+  padding-bottom: 0.25em;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent-start);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+nav a:hover::after,
+nav a.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
