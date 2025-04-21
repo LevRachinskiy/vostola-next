@@ -169,7 +169,11 @@
     </main>
 
     <footer>
-      <strong>Disclaimer:</strong> This is not financial advice. Vostola provides algorithmic analysis tools only, and we are not registered financial advisors. All investment decisions are solely your responsibility.
+      <strong>Disclaimer:</strong>
+      Vostola provides algorithmic analysis tools only. We are not registered
+      financial advisors, and nothing on this page constitutes investment,
+      trading, or financial advice. All investment decisions remain solely
+      your responsibility. Past performance does not guarantee future results.
     </footer>
   </div>
 
@@ -210,6 +214,47 @@
         a.classList.toggle('active', a.getAttribute('href') === current);
       });
     });
+  </script>
+
+  <!-- Payment modal markup -->
+  <div id="payment-modal-backdrop">
+    <div id="payment-modal">
+      <h3>Upgrade to Premium</h3>
+      <form id="payment-form">
+        <input type="text" id="card-name" placeholder="Name on Card" required />
+        <input type="text" id="card-number" placeholder="Card Number" required />
+        <input type="text" id="card-expiry" placeholder="MM/YY" required />
+        <input type="text" id="card-cvc" placeholder="CVC" required />
+        <button type="submit" class="btn">Pay</button>
+        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    // Premium toggle
+    const premiumToggle = document.getElementById('premium-toggle');
+    const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+    if (user.isPremium) premiumToggle && (premiumToggle.checked = true);
+    premiumToggle && premiumToggle.addEventListener('change', ()=>{
+      if (premiumToggle.checked && !user.isPremium) {
+        document.getElementById('payment-modal-backdrop').style.display = 'flex';
+      } else if (!premiumToggle.checked && user.isPremium) {
+        user.isPremium = false;
+        localStorage.setItem('vostolaUser', JSON.stringify(user));
+        location.reload();
+      }
+    });
+    document.getElementById('payment-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      user.isPremium = true;
+      localStorage.setItem('vostolaUser', JSON.stringify(user));
+      document.getElementById('payment-modal-backdrop').style.display = 'none';
+      location.reload();
+    });
+    document.getElementById('payment-cancel').addEventListener('click', ()=>{
+      premiumToggle && (premiumToggle.checked = false);
+      document.getElementById('payment-modal-backdrop').style.display = 'none';
+    });
 
     // Auth button
     const authBtn = document.getElementById('auth-btn');
@@ -221,5 +266,6 @@
         : 'Log in / Sign up';
     });
   </script>
+
 </body>
 </html>
