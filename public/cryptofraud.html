@@ -6,9 +6,28 @@
   <title>Vostola • AI Agent</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
+    /* ─────────────────────────────────────────────────────────────── */
+    /* Make the page a flex‐column so footer sits at the very bottom */
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;             /* take all remaining space above the footer */
+    }
+    footer {
+      margin-top: auto;    /* push the footer to the bottom */
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: #999;
+      text-align: center;
+      background: rgba(0,0,0,0.6);
+    }
+    /* ─────────────────────────────────────────────────────────────── */
+
     /* Nav background mesh */
-    
-    /* NAV background mesh */
     nav {
       display: flex;
       align-items: center;
@@ -133,31 +152,38 @@
         Free users can now use it twice a week, Premium members have up to 10 requests. We are working hard to lower our processing costs in the near future.
       </p>
 
-      <div id="chat-container" class="fade" style="max-height:300px;overflow-y:auto;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);padding:1rem;border-radius:8px;"></div>
+      <div id="chat-container" class="fade"
+           style="max-height:300px;overflow-y:auto;background:rgba(255,255,255,0.1);
+                  backdrop-filter:blur(8px);padding:1rem;border-radius:8px;"></div>
       <form id="chat-form" style="margin-top:1rem;display:flex;gap:.5rem;">
-        <input type="text" id="chat-input" placeholder="Ask me..." style="flex:1;padding:.5rem;border-radius:4px;border:1px solid var(--muted);background:transparent;color:var(--text);"/>
+        <input type="text" id="chat-input" placeholder="Ask me..."
+               style="flex:1;padding:.5rem;border-radius:4px;border:1px solid var(--muted);
+                      background:transparent;color:var(--text);"/>
         <button class="btn">Send</button>
       </form>
     </section>
   </main>
 
-  <!-- ─────────────  DISCLAIMER  ───────────── -->
-  <footer style="margin-top:4rem;font-size:0.8rem;color:#999;text-align:center;">
+  <footer>
     <strong>Disclaimer:</strong>
-    Vostola provides algorithmic analysis tools only. We are not registered
-    financial advisors, and nothing on this page constitutes investment,
-    trading, or financial advice. All investment decisions remain solely
-    your responsibility. Past performance does not guarantee future results.
+    Vostola provides algorithmic analysis tools only. We are not registered financial advisors,
+    and nothing on this page constitutes investment, trading, or financial advice. All
+    investment decisions remain solely your responsibility. Past performance does not
+    guarantee future results.
   </footer>
-  <!-- ──────────────────────────────────────── -->
 
   <script>
     document.getElementById('chat-form').addEventListener('submit', e=>{
       e.preventDefault();
-      const inp=document.getElementById('chat-input'), cont=document.getElementById('chat-container');
-      const ub=document.createElement('div'); ub.textContent=inp.value; ub.style.cssText='background:#444;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;align-self:flex-end;';
+      const inp=document.getElementById('chat-input'),
+            cont=document.getElementById('chat-container');
+      const ub=document.createElement('div');
+      ub.textContent = inp.value;
+      ub.style.cssText = 'background:#444;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;align-self:flex-end;';
       cont.appendChild(ub);
-      const bb=document.createElement('div'); bb.textContent='Processing...'; bb.style.cssText='background:#555;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;';
+      const bb=document.createElement('div');
+      bb.textContent = 'Processing...';
+      bb.style.cssText = 'background:#555;padding:.5rem;border-radius:12px;color:#fff;margin:.5rem 0;';
       cont.appendChild(bb);
       inp.value='';
       setTimeout(()=>bb.textContent='Token appears safe.',800);
@@ -166,22 +192,19 @@
 
   <script>
     const faders=document.querySelectorAll('.fade');
-    const onScroll=()=>{faders.forEach(el=>{const r=el.getBoundingClientRect();if(r.top<window.innerHeight*0.85)el.classList.add('visible');});};
+    const onScroll=()=>{ faders.forEach(el=>{
+      const r=el.getBoundingClientRect();
+      if(r.top<window.innerHeight*0.85) el.classList.add('visible');
+    }); };
     window.addEventListener('scroll',onScroll);
     window.addEventListener('load',onScroll);
   </script>
 
   <script>
-    // Dynamically set active link based on URL
     document.addEventListener('DOMContentLoaded', () => {
       const path = window.location.pathname.split('/').pop();
       document.querySelectorAll('nav a').forEach(a => {
-        const href = a.getAttribute('href');
-        if (href === path) {
-          a.classList.add('active');
-        } else {
-          a.classList.remove('active');
-        }
+        a.classList.toggle('active', a.getAttribute('href') === path);
       });
     });
   </script>
@@ -195,53 +218,51 @@
         <input type="text" id="card-expiry" placeholder="MM/YY" required />
         <input type="text" id="card-cvc" placeholder="CVC" required />
         <button type="submit" class="btn">Pay</button>
-        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
+        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">
+          Cancel
+        </button>
       </form>
     </div>
   </div>
+
   <script>
-    // Premium toggle
     const premiumToggle = document.getElementById('premium-toggle');
-    const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-    if (user.isPremium) { premiumToggle.checked = true; }
-    premiumToggle.addEventListener('change', () => {
-      if (premiumToggle.checked && (!user.isPremium)) {
-        document.getElementById('payment-modal-backdrop').style.display = 'flex';
-      } else if (!premiumToggle.checked && user.isPremium) {
+    const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+    if(user.isPremium) premiumToggle.checked = true;
+    premiumToggle.addEventListener('change', ()=>{
+      if(premiumToggle.checked && !user.isPremium) {
+        document.getElementById('payment-modal-backdrop').style.display='flex';
+      } else if(!premiumToggle.checked && user.isPremium) {
         user.isPremium = false;
         localStorage.setItem('vostolaUser', JSON.stringify(user));
         location.reload();
       }
     });
-    // Payment form
-    document.getElementById('payment-form').addEventListener('submit', e => {
+    document.getElementById('payment-form').addEventListener('submit', e=>{
       e.preventDefault();
-      user.isPremium = true; // simulate success
+      user.isPremium = true;
       localStorage.setItem('vostolaUser', JSON.stringify(user));
-      document.getElementById('payment-modal-backdrop').style.display = 'none';
+      document.getElementById('payment-modal-backdrop').style.display='none';
       location.reload();
     });
-    document.getElementById('payment-cancel').addEventListener('click', () => {
+    document.getElementById('payment-cancel').addEventListener('click', ()=>{
       premiumToggle.checked = false;
-      document.getElementById('payment-modal-backdrop').style.display = 'none';
+      document.getElementById('payment-modal-backdrop').style.display='none';
     });
   </script>
 
   <script>
-    // Always direct auth button to login page
-    document.getElementById('auth-btn').onclick = () => window.location.href = 'login.html';
+    document.getElementById('auth-btn').onclick = ()=> window.location.href='login.html';
   </script>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', ()=>{
       const authBtn = document.getElementById('auth-btn');
-      const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-      if (user.email) {
-        authBtn.textContent = `${user.email} (${user.isPremium ? 'Premium' : 'Free'})`;
-      } else {
-        authBtn.textContent = 'Log in / Sign up';
-      }
-      authBtn.onclick = () => location.href = 'login.html';
+      const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+      authBtn.textContent = user.email
+        ? `${user.email} (${user.isPremium?'Premium':'Free'})`
+        : 'Log in / Sign up';
+      authBtn.onclick = ()=> location.href='login.html';
     });
   </script>
 </body>
