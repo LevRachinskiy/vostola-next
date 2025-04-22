@@ -1,5 +1,3 @@
-/* globals.css (root) */
-
 /* 1) Import Inter */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
@@ -22,48 +20,44 @@
   box-sizing: border-box;
 }
 
-/* 4) Make html/body full‑height & contain overscroll */
-html, body {
-  height: 100%;
+/* 4) Pin background on html so it covers all scroll */
+html {
   overscroll-behavior-y: contain;
-  font-family: 'Inter', sans-serif;
-  color: var(--text);
-}
-
-/* 5) Move the background onto body so it never runs out */
-body {
   background:
     url('/assets/images/BG1.png') center/cover no-repeat fixed,
     linear-gradient(180deg, var(--bg-start), var(--bg-end));
   background-attachment: fixed;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+/* 5) Make body transparent over the html background */
+body {
   min-height: 100%;
+  background: none;
+  font-family: inherit;
+  color: inherit;
 }
 
 /* 6) Force Inter+white everywhere */
-html, body, nav, nav a, .container, .hero, .features, footer {
+nav, nav a, .container, .hero, .features, footer {
   font-family: 'Inter', sans-serif !important;
   color: var(--text) !important;
 }
 
-/* make all inputs/textareas show the yellow glow when focused */
+/* 7) Input focus glow */
 input, textarea {
   border: 1px solid var(--border);
   transition: border-color .3s, box-shadow .3s;
 }
-
-input:focus, textarea:focus {
+input:focus, textarea:focus,
+#chat-input:focus {
   outline: none;
   border-color: var(--accent-start);
   box-shadow: 0 0 0 2px rgba(255,217,0,0.5);
 }
-/* chat box focus override */
-#chat-input:focus {
-  outline: none !important;
-  border-color: var(--accent-start) !important;
-  box-shadow: 0 0 0 2px rgba(255,217,0,0.5) !important;
-}
 
-/* 7) Nav link underline (transform‑based) */
+/* 8) Nav link underline */
 nav a {
   position: relative;
   padding-bottom: 0.25em;
