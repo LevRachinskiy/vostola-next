@@ -1,6 +1,6 @@
 # Vostola Next.js App
 
-This project wraps your existing static site in a modern **Next.js** setup so you can start iterating fast.
+This project the xisting static site in a modern **Next.js** setup so that you can start iterating fast.
 
 ## Quick Start
 
