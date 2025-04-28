@@ -343,5 +343,49 @@ nav a.active::after {
     });
 </script>
 
+  <!-- ─── Firebase SDKs & Initialization ─── -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 1) Initialize Firebase with your config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAksCA8p_NfYEZu-Y6lxX8P1f1TKKdoCxA",
+      authDomain: "vostola-cba72.firebaseapp.com",
+      projectId: "vostola-cba72",
+      storageBucket: "vostola-cba72.firebasestorage.app",
+      messagingSenderId: "720250606800",
+      appId: "1:720250606800:web:44d1596a0297c322913ad5",
+      measurementId: "G-71M7SJ9LZT"  // optional if you’re using Analytics
+    };
+
+    // 2) Initialize the Firebase App & Firestore
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+  <!-- ─── Hook your hero-subscribe form ─── -->
+  <script>
+    const form = document.getElementById('hero-subscribe');
+    const emailInput = document.getElementById('hero-email');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      if (!email) return alert('Please enter an email.');
+
+      try {
+        await db.collection('newsletter_signups').add({
+          email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert('Thanks for subscribing!');
+        emailInput.value = '';
+      } catch (err) {
+        console.error(err);
+        alert('Oops—something went wrong.');
+      }
+    });
+  </script>
 </body>
 </html>
