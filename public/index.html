@@ -1,64 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Vostola</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
-<style>
-    /* Nav background mesh */
-    
-    /* NAV background mesh */
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Vostola</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+ <!-- in <head> -->
+  <link rel="stylesheet" href="/assets/css/global.css"/>
+
+
+
+  <style>
+
+    .container { max-width:1200px; margin:auto; padding:1rem; position: relative; }
+
+    /* NAV */
     nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      background: rgba(13,13,13,0.85);
-      z-index: 10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 0; position:sticky; top:0;
+      background: rgba(13,13,13,0.85); z-index:10;
     }
+    nav img { height:55px; }
     
-
     
-
-:root {--bg-start:#0d0d0d;--bg-end:#1a1a1a;--accent-start:#ffd700;--accent-end:#ff9900;--text:#fff;--muted:#777;}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Inter',sans-serif;background: url('assets/images/BG1.png') center/cover no-repeat, linear-gradient(180deg,var(--bg-start),var(--bg-end));color:var(--text);overflow-x:hidden;}
-.container{max-width:1200px;margin:auto;padding:1rem;}
-
-    /* NAV background mesh */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      background: rgba(13,13,13,0.85);
-      z-index: 10;
-    }
-    
-
-nav .shine img{height:55px;} /* updated height */
-
+    /* NAV LINKS */
 nav a {
+  display: inline-block;       /* box wraps text exactly */
+  padding-bottom: 4px;         /* room for underline */
   color: var(--text);
   text-decoration: none;
   margin: 0 .75rem;
-  position: relative;
   font-weight: 500;
-  padding-bottom: 4px;           /* make room for the underline */
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;                     /* flush under the text */
-  height: 2px;
-  width: 0;
-  background: var(--accent-start);
-  transition: width .3s;
+  position: relative;
 }
 
 nav a:hover::after,
@@ -67,155 +41,147 @@ nav a.active::after {
 }
 
 
-nav a:hover::after,nav a.active::after{width:100%;}
-.btn{padding:.6rem 1rem;border-radius:4px;text-transform:uppercase;cursor:pointer;font-weight:600;border:none;}
-.btn-primary{background:linear-gradient(90deg,var(--accent-start),var(--accent-end));color:#000;animation:pulse 6s infinite ease-in-out;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 rgba(255,217,0,0);}50%{box-shadow:0 0 12px rgba(255,217,0,0.6);}}
-.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2rem;height:80vh;position:relative;overflow:hidden;}
-.hero .mesh{position:absolute;inset:0;background:url('assets/images/vostolabackground.png')center/cover no-repeat;opacity:0.18;pointer-events:none;}
-.hero-left{z-index:1;}
-.hero h1{font-size:3rem;line-height:1.1;margin-bottom:.5rem;}
-.gradient-text{background:linear-gradient(90deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.fade{opacity:0;transform:translateY(20px);transition:all .8s ease;}
-.fade.visible{opacity:1;transform:none;}
-section{padding:4rem 0;}section p{color:var(--muted);margin-top:.5rem;}
-dialog {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:90%;max-width:400px;background:rgba(13,13,13,0.95);border:none;border-radius:8px;opacity:0;animation:fadeIn 0.3s forwards;}
-@keyframes fadeIn {to {opacity:1;}}
-dialog::backdrop{background:rgba(0,0,0,0.7);}
-@media(max-width:768px){.hero{grid-template-columns:1fr;text-align:center;height:auto;padding:4rem 0;}}
-
-/* Fix nav logo and button styles */
-nav img { height: 55px; }
-.btn {
-  padding: .6rem 1rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-weight: 600;
-  border: none;
-  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-  color: #000;
-  transition: filter .2s;
-}
-.btn:hover { filter: brightness(1.1); }
 
 
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: var(--accent-start) !important;
-      box-shadow: 0 0 0 2px rgba(255,217,0,0.5) !important;
-      }
-    
-
-/* Toggle switch */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-  margin-right: 1rem;
-  vertical-align: middle;
-}
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px; width: 18px;
-  left: 3px; bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: var(--accent-start);
-}
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-/* Payment modal */
-#payment-modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none; align-items: center; justify-content: center;
-  z-index: 2000;
-}
-#payment-modal {
-  background: rgba(13,13,13,0.95);
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 400px; width: 90%;
-  color: var(--text);
-}
-#payment-modal input {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-
-    /* Toggle switch */
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-      margin: 1rem 0;
-      vertical-align: middle;
+    nav a:hover::after, nav a.active::after { width:100%; }
+    .btn {
+      padding:.6rem 1rem; border-radius:4px; text-transform:uppercase;
+      cursor:pointer; font-weight:600; border:none;
+      background: linear-gradient(90deg,var(--accent-start),var(--accent-end));
+      color:#000; transition:filter .2s;
     }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 24px;
+    .btn:hover { filter: brightness(1.1); }
+
+    /* HERO */
+    .hero {
+      display:grid; grid-template-columns:1fr 1fr;
+      align-items:center; gap:2rem; height:80vh;
+      position:relative; overflow:hidden;
     }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px; width: 18px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
+    .mesh {
+      position:absolute; inset:0;
+      background:url('assets/images/vostolabackground.png') center/cover no-repeat;
+      opacity:.3; pointer-events:none;
     }
-    input:checked + .slider {
-      background-color: var(--accent-start);
+    .hero-left { z-index:1; }
+    .hero h1 {
+      font-size:3rem; line-height:1.1; margin-bottom:.5rem;
     }
-    input:checked + .slider:before {
-      transform: translateX(26px);
+    .hero p { font-size:1rem; color:var(--text); }
+    .hero-logo {
+      max-width:350px; display:block; margin:auto; z-index:1;
     }
-    /* Payment modal */
+
+    /* subscribe form */
+    .subscribe-form {
+      margin-top:2rem; display:flex; gap:.5rem;
+    }
+    .subscribe-form input {
+      flex:1; padding:.5rem; border-radius:4px;
+      border:1px solid var(--border); background:transparent;
+      color:var(--text); transition: box-shadow .3s, border-color .3s;
+    }
+    .subscribe-form input:focus {
+      outline:none; border-color: var(--accent-start);
+      box-shadow: 0 0 0 2px rgba(255,217,0,0.5);
+    }
+
+    /* FEATURES */
+    .features {
+      display:flex; gap:1rem;
+      justify-content:center; flex-wrap:wrap;
+      margin-top:2rem;
+    }
+    .feature-card {
+      background: var(--card-bg); border:1px solid var(--border);
+      border-radius:8px; padding:1.5rem; width:300px;
+      text-align:center; transition:transform .3s,filter .3s;
+    }
+    .feature-card:hover { transform:translateY(-5px); filter:brightness(1.1); }
+    .feature-icon {
+      width:64px; height:64px; object-fit:contain;
+      margin-bottom:.75rem;
+    }
+
+    /* FADE-IN */
+    .fade {
+      opacity:0; transform:translateY(20px);
+      transition:all .8s ease;
+    }
+    .visible { opacity:1; transform:none; }
+
+    @media(max-width:768px){
+      .hero { grid-template-columns:1fr; text-align:center; height:auto; padding:4rem 0; }
+      .features { flex-direction:column; align-items:center; }
+    }
+
+    /* PAYMENT MODAL */
     #payment-modal-backdrop {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none; align-items: center; justify-content: center;
-      z-index: 2000;
+      position:fixed; inset:0; background:rgba(0,0,0,0.7);
+      display:none; align-items:center; justify-content:center;
+      z-index:2000;
     }
     #payment-modal {
-      background: rgba(13,13,13,0.95);
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 400px; width: 90%;
-      color: var(--text);
+      background:rgba(13,13,13,0.95); padding:2rem;
+      border-radius:8px; max-width:400px; width:90%;
+      color:var(--text);
     }
     #payment-modal input {
-      width: 100%; margin-bottom: 1rem;
+      width:100%; margin-bottom:1rem; padding:.5rem;
+      border:1px solid var(--border); border-radius:4px;
+      background:transparent; color:var(--text);
     }
 
-</style>
-</head><body>
-<nav class="container">
-    <a href="index.html"><img src="assets/images/vostola-logo.png" alt="Logo"/></a>
+    /* FOOTER */
+    .links-section {
+      background: var(--bg-start); color: var(--text);
+      padding:3rem 0;
+    }
+    .link-columns {
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap:2rem; align-items:start;
+    }
+    .link-columns .col h3 {
+      margin-bottom:.75rem; font-size:1.1rem;
+    }
+    .link-columns .col ul,
+    .link-columns .col p {
+      list-style:none; padding:0; margin:0;
+    }
+    .link-columns .col a {
+      color:var(--text); text-decoration:none;
+      font-size:.95rem;
+    }
+    .link-columns .col a:hover {
+      text-decoration:underline;
+    }
+    .footer-logo {
+      max-width:140px; display:block;
+    }
+    .disclaimer-section {
+      background: var(--bg-end); color: var(--muted);
+      padding:2rem 0; font-size:.85rem; line-height:1.6;
+    }
+    .disclaimer-section strong { color: var(--text); }
+
+    nav.container a {
+      display: inline-block !important;
+      padding-bottom: 4px !important;
+    }
+    nav.container a::after {
+      bottom: 0 !important;
+    }
+    
+  </style>
+</head>
+<body>
+  <nav class="container">
+    <a href="index.html">
+      <img src="assets/images/vostola-logo.png" alt="Vostola Logo"/>
+    </a>
+
+
     
     <div>
       <a href="newsletter.html">Newsletter</a>
@@ -224,158 +190,150 @@ input:checked + .slider:before {
       <a href="careers.html">Careers</a>
       <a href="about.html">About</a>
     </div>
-    <button id="auth-btn" class="btn">Log in / Sign up</button>
+    <button id="auth-btn" class="btn">Log in / Sign up</button>
   </nav>
 
-<main class="container">
-  <section class="fade" style="text-align:center;">
-    <h1>Member Login / Sign Up</h1>
-    <form id="auth" style="display:grid;gap:1rem;max-width:320px;margin:auto;">
-      <input type="email" id="email" placeholder="Email" required style="padding:.5rem;border-radius:4px;border:1px solid var(--muted);background:transparent;color:var(--text);"/>
-      <input type="password" id="pass" placeholder="Password" style="padding:.5rem;border-radius:4px;border:1px solid var(--muted);background:transparent;color:var(--text);"/>
-      
-      <button class="btn btn-primary">Submit</button>
-    </form>
-    <!-- Premium Toggle -->
-    <div style="text-align:center;">
-      <label class="switch">\
-<input type="checkbox" id="premium-toggle">\
-<span class="slider"></span>\
-</label>
-    </div>
-    <!-- Payment Modal -->
-    <div id="payment-modal-backdrop">
-      <div id="payment-modal">
-        <h3>Upgrade to Premium</h3>
-        <form id="payment-form">
-          <input type="text" id="card-name" placeholder="Name on Card" required />
-          <input type="text" id="card-number" placeholder="Card Number" required />
-          <input type="text" id="card-expiry" placeholder="MM/YY" required />
-          <input type="text" id="card-cvc" placeholder="CVC" required />
-          <button type="submit" class="btn">Pay</button>
-          <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
+  <main class="container">
+    <section class="hero fade">
+      <div class="hero-left">
+        <h1>Intelligent Algorithms<br/>For The<br/>Digital Assets Market</h1>
+        <p>Bridging cutting‑edge quant research and real‑time execution.</p>
+        <form id="hero-subscribe" class="subscribe-form">
+          <input type="email" id="hero-email" placeholder="Your email"/>
+          <button type="submit" class="btn">Subscribe</button>
         </form>
       </div>
-    </div>
+      <img src="assets/images/hero-logo.png" alt="Hero Logo" class="hero-logo fade"/>
+      <div class="mesh"></div>
+    </section>
 
-    <!-- Premium Toggle -->
-    <div style="text-align:center;">
-      <span>Premium Access</span>
-    </div>
-    <!-- Payment Modal -->
-    <div id="payment-modal-backdrop">
-      <div id="payment-modal">
-        <h3>Upgrade to Premium</h3>
-        <form id="payment-form">
-          <input type="text" id="card-name" placeholder="Name on Card" required />
-          <input type="text" id="card-number" placeholder="Card Number" required />
-          <input type="text" id="card-expiry" placeholder="MM/YY" required />
-          <input type="text" id="card-cvc" placeholder="CVC" required />
-          <button type="submit" class="btn">Pay</button>
-          <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
-        </form>
+    <section class="fade">
+      <h2 style="text-align:center;">Our Edge</h2>
+      <div class="features">
+        <div class="feature-card fade">
+          <img src="assets/images/alpha.png" class="feature-icon" alt="Alpha"/>
+          <h3>Alpha Generation</h3>
+          <p>Consume our proprietary alpha streams for pairs and statistical arbitrage.</p>
+        </div>
+        <div class="feature-card fade">
+          <img src="assets/images/Fraud.png" class="feature-icon" alt="Fraud"/>
+          <h3>Fraud Detection</h3>
+          <p>On‑chain risk scores and explanations to keep you safe from scams.</p>
+        </div>
+        <div class="feature-card fade">
+          <img src="assets/images/Research.png" class="feature-icon" alt="Research"/>
+          <h3>Premium Research</h3>
+          <p>Weekly deep‑dive newsletter with back‑testable strategies and insights.</p>
+        </div>
       </div>
-    </div>
+    </section>
+  </main>
 
-  </section>
+  <!-- Payment modal -->
+  <div id="payment-modal-backdrop">
+    <div id="payment-modal">
+      <h3>Upgrade to Premium</h3>
+      <form id="payment-form">
+        <input type="text" id="card-name" placeholder="Name on Card" required />
+        <input type="text" id="card-number" placeholder="Card Number" required />
+        <input type="text" id="card-expiry" placeholder="MM/YY" required />
+        <input type="text" id="card-cvc" placeholder="CVC" required />
+        <button type="submit" class="btn">Pay</button>
+        <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <section class="links-section">
+      <div class="container link-columns">
+        <div class="col logo-col">
+          <img src="/Both.png" alt="Vostola logo" class="footer-logo"/>
+        </div>               
+        <div class="col">
+          <h3>Join Us</h3>
+          <p><a href="careers.html">Careers</a></p>
+        </div>
+        <div class="col">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="market-access.html">Market Access</a></li>
+            <li><a href="cryptofraud.html">AI Agent</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Get in Touch</h3>
+          <ul>
+            <li><a href="mailto:trading@vostola.com">trading@vostola.com</a></li>
+            <li><a href="mailto:newsletter@vostola.com">newsletter@vostola.com</a></li>
+            <li><a href="mailto:careers@vostola.com">careers@vostola.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="disclaimer-section">
+      <div class="container">
+        <p><strong>Disclaimer:</strong> Vostola provides algorithmic analysis tools only. We are not registered financial advisors and do not offer personalized investment advice.</p>
+        <p><strong>Limitation of Liability:</strong> Use of this site is at your own risk. Vostola makes no guarantees about the accuracy or completeness of any content.</p>
+        <p><strong>Jurisdiction:</strong> It is your obligation to comply with all applicable laws in your region.</p>
+      </div>
+    </section>
+  </footer>
+
   <script>
-    document.getElementById('auth').addEventListener('submit',e=>{
-      e.preventDefault();
-      localStorage.setItem('vostolaUser',JSON.stringify({email:document.getElementById('email').value,isPremium:document.getElementById('premium').checked}));
-      window.location='newsletter.html';
+    document.addEventListener('DOMContentLoaded', () => {
+      // Auth button
+      const authBtn = document.getElementById('auth-btn');
+      const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
+      authBtn.textContent = user.email
+        ? `${user.email} (${user.isPremium ? 'Premium' : 'Free'})`
+        : 'Log in / Sign up';
+      authBtn.onclick = () => location.href = 'login.html';
+
+      // Active nav link
+      const path = window.location.pathname.split('/').pop();
+      document.querySelectorAll('nav a').forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === path);
+      });
+
+      // Fade‑in on scroll
+      const fades = document.querySelectorAll('.fade');
+      const reveal = () => {
+        fades.forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+            el.classList.add('visible');
+          }
+        });
+      };
+      window.addEventListener('scroll', reveal);
+      reveal();
+
+      // Subscribe form
+      document.getElementById('hero-subscribe').addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Subscribed: ' + document.getElementById('hero-email').value);
+      });
+
+      // Payment modal
+      const paymentForm = document.getElementById('payment-form');
+      const backdrop = document.getElementById('payment-modal-backdrop');
+      const cancel = document.getElementById('payment-cancel');
+      paymentForm.addEventListener('submit', e => {
+        e.preventDefault();
+        user.isPremium = true;
+        localStorage.setItem('vostolaUser', JSON.stringify(user));
+        backdrop.style.display = 'none';
+        location.reload();
+      });
+      cancel.addEventListener('click', () => {
+        backdrop.style.display = 'none';
+      });
     });
   </script>
-</main>
-
-<script>
-const faders=document.querySelectorAll('.fade');
-const onScroll=()=>{faders.forEach(el=>{const r=el.getBoundingClientRect();if(r.top<window.innerHeight*0.85)el.classList.add('visible');});};
-window.addEventListener('scroll',onScroll);
-window.addEventListener('load',onScroll);
-</script>
-
-<script>
-// Dynamically set active link based on URL
-document.addEventListener('DOMContentLoaded', () => {
-  const path = window.location.pathname.split('/').pop();
-  document.querySelectorAll('nav a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (href === path) {
-      a.classList.add('active');
-    } else {
-      a.classList.remove('active');
-    }
-  });
-});
-</script>
-
-
-<div id="payment-modal-backdrop">
-  <div id="payment-modal">
-    <h3>Upgrade to Premium</h3>
-    <form id="payment-form">
-      <input type="text" id="card-name" placeholder="Name on Card" required />
-      <input type="text" id="card-number" placeholder="Card Number" required />
-      <input type="text" id="card-expiry" placeholder="MM/YY" required />
-      <input type="text" id="card-cvc" placeholder="CVC" required />
-      <button type="submit" class="btn">Pay</button>
-      <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
-    </form>
-  </div>
-</div>
-<script>
-// Premium toggle
-const premiumToggle = document.getElementById('premium-toggle');
-const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-if (user.isPremium) {
-  premiumToggle.checked = true;
-}
-premiumToggle.addEventListener('change', () => {
-  if (premiumToggle.checked && (!user.isPremium)) {
-    document.getElementById('payment-modal-backdrop').style.display = 'flex';
-  } else if (!premiumToggle.checked && user.isPremium) {
-    user.isPremium = false;
-    localStorage.setItem('vostolaUser', JSON.stringify(user));
-    location.reload();
-  }
-});
-// Payment form
-document.getElementById('payment-form').addEventListener('submit', e => {
-  e.preventDefault();
-  // Simulate payment
-  user.isPremium = true;
-  localStorage.setItem('vostolaUser', JSON.stringify(user));
-  document.getElementById('payment-modal-backdrop').style.display = 'none';
-  location.reload();
-});
-document.getElementById('payment-cancel').addEventListener('click', () => {
-  premiumToggle.checked = false;
-  document.getElementById('payment-modal-backdrop').style.display = 'none';
-});
-</script>
-
-<script>
-  </script>
-
-<script>
-  // Always direct auth button to login page
-  document.getElementById('auth-btn').onclick = () => {
-    window.location.href = 'login.html';
-  };
-</script>
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const authBtn = document.getElementById('auth-btn');
-  const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-  if (user.email) {
-    authBtn.textContent = `${user.email} (${user.isPremium ? 'Premium' : 'Free'})`;
-  } else {
-    authBtn.textContent = 'Log in / Sign up';
-  }
-  authBtn.onclick = () => location.href = 'login.html';
-});
-</script>
 
 <script>
   document.getElementById('nav-toggle')
