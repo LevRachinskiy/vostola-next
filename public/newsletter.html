@@ -142,6 +142,25 @@ input:checked + .slider:before {
   }
 
 </style>
+
+  <!-- Firebase SDKs & init -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey:            "AIzaSyAksCA8p_NfYEZu-Y6lxX8P1f1TKKdoCxA",
+      authDomain:        "vostola-cba72.firebaseapp.com",
+      projectId:         "vostola-cba72",
+      storageBucket:     "vostola-cba72.firebasestorage.app",
+      messagingSenderId: "720250606800",
+      appId:             "1:720250606800:web:44d1596a0297c322913ad5",
+      measurementId:     "G-71M7SJ9LZT"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+
+
 </head>
 <body>
   <nav class="container">
@@ -229,121 +248,113 @@ input:checked + .slider:before {
     </dialog>
   </main>
 
-  <script>
-    // Fade-in
-    const fades = document.querySelectorAll('.fade');
-    function reveal() { fades.forEach(el=>{ if(el.getBoundingClientRect().top < window.innerHeight*0.85) el.classList.add('visible'); }); }
-    window.addEventListener('scroll', reveal);
-    window.addEventListener('load', reveal);
-
-    // Subscription & display grid
-    document.getElementById('subscribe-form').addEventListener('submit', e => {
-      e.preventDefault();
-      document.getElementById('newsletter-grid').style.display = 'block';
-      localStorage.setItem('vostolaUser', JSON.stringify({ email: document.getElementById('email-input').value, isPremium: false }));
-      applyBlur();
-    });
-
-    // Auth button logic
-    const authBtn = document.getElementById('auth-btn');
-    const user = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
-    if(user.email) {
-      authBtn.textContent = `${user.email} (Free)`;
-      
-      document.getElementById('newsletter-grid').style.display='block';
-      applyBlur();
-    } else {
-      
-    }
-
-    // Issue card click
-    document.querySelector('.card[data-issue="1"]').onclick = () => document.getElementById('issue1-dialog').showModal();
-
-    // Blur premium section if not premium
-    function applyBlur() {
-      const u = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
-      const premiumSec = document.querySelector('#premium-content');
-      if(!u.isPremium) {
-        premiumSec.classList.add('premium-blur');
-        const overlay = document.createElement('div');
-        overlay.className = 'premium-overlay';
-        overlay.textContent = 'Unlock Premium to view full insights';
-        premiumSec.parentNode.appendChild(overlay);
+  <!-- Fade-in on scroll -->
+<script>
+  const fades = document.querySelectorAll('.fade');
+  function reveal() {
+    fades.forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+        el.classList.add('visible');
       }
-    }
-  </script>
-
-<div id="payment-modal-backdrop">
-  <div id="payment-modal">
-    <h3>Upgrade to Premium</h3>
-    <form id="payment-form">
-      <input type="text" id="card-name" placeholder="Name on Card" required />
-      <input type="text" id="card-number" placeholder="Card Number" required />
-      <input type="text" id="card-expiry" placeholder="MM/YY" required />
-      <input type="text" id="card-cvc" placeholder="CVC" required />
-      <button type="submit" class="btn">Pay</button>
-      <button type="button" id="payment-cancel" class="btn" style="background:#444;color:#fff;">Cancel</button>
-    </form>
-  </div>
-</div>
-<script>
-// Premium toggle
-const premiumToggle = document.getElementById('premium-toggle');
-const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-if (user.isPremium) {
-  premiumToggle.checked = true;
-}
-premiumToggle.addEventListener('change', () => {
-  if (premiumToggle.checked && (!user.isPremium)) {
-    document.getElementById('payment-modal-backdrop').style.display = 'flex';
-  } else if (!premiumToggle.checked && user.isPremium) {
-    user.isPremium = false;
-    localStorage.setItem('vostolaUser', JSON.stringify(user));
-    location.reload();
-  }
-});
-// Payment form
-document.getElementById('payment-form').addEventListener('submit', e => {
-  e.preventDefault();
-  // Simulate payment
-  user.isPremium = true;
-  localStorage.setItem('vostolaUser', JSON.stringify(user));
-  document.getElementById('payment-modal-backdrop').style.display = 'none';
-  location.reload();
-});
-document.getElementById('payment-cancel').addEventListener('click', () => {
-  premiumToggle.checked = false;
-  document.getElementById('payment-modal-backdrop').style.display = 'none';
-});
-</script>
-
-<script>
-  // Always direct auth button to login page
-  document.getElementById('auth-btn').onclick = () => {
-    window.location.href = 'login.html';
-  };
-</script>
-
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  const authBtn = document.getElementById('auth-btn');
-  const user = JSON.parse(localStorage.getItem('vostolaUser') || '{}');
-  if (user.email) {
-    authBtn.textContent = `${user.email} (${user.isPremium ? 'Premium' : 'Free'})`;
-  } else {
-    authBtn.textContent = 'Log in / Sign up';
-  }
-  authBtn.onclick = () => location.href = 'login.html';
-});
-</script>
-
-<script>
-  document.getElementById('nav-toggle')
-    .addEventListener('click', () => {
-      document.querySelector('.nav-links')
-        .classList.toggle('open');
     });
+  }
+  window.addEventListener('scroll', reveal);
+  window.addEventListener('load', reveal);
 </script>
+
+<!-- Subscribe form → Firestore & then show grid -->
+<script>
+  const subscribeForm = document.getElementById('subscribe-form');
+  const emailInput    = document.getElementById('email-input');
+
+  subscribeForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return alert('Please enter an email.');
+
+    try {
+      // Write subscriber
+      await db.collection('newsletter_signups').add({
+        email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      alert('Thanks for subscribing!');
+      document.getElementById('newsletter-grid').style.display = 'block';
+      localStorage.setItem(
+        'vostolaUser',
+        JSON.stringify({ email, isPremium: false })
+      );
+      applyBlur();
+      emailInput.value = '';
+    } catch (err) {
+      console.error('Firestore error:', err);
+      alert('❌ Subscription failed—please try again.');
+    }
+  });
+</script>
+
+<!-- Auth button, issue‐card click, blur, payment logic, nav toggle -->
+<script>
+  // Auth button
+  const authBtn = document.getElementById('auth-btn');
+  const user    = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+  if (user.email) {
+    authBtn.textContent = `${user.email} (${user.isPremium?'Premium':'Free'})`;
+    document.getElementById('newsletter-grid').style.display = 'block';
+    applyBlur();
+  }
+  authBtn.addEventListener('click', () => location.href = 'login.html');
+
+  // Click to open issue dialog
+  document.querySelector('.card[data-issue="1"]')
+          .addEventListener('click', () => {
+    document.getElementById('issue1-dialog').showModal();
+  });
+
+  // Blur premium sections
+  function applyBlur() {
+    const u = JSON.parse(localStorage.getItem('vostolaUser')||'{}');
+    if (!u.isPremium) {
+      const premiumSec = document.getElementById('premium-content');
+      premiumSec.classList.add('premium-blur');
+      const overlay = document.createElement('div');
+      overlay.className = 'premium-overlay';
+      overlay.textContent = 'Unlock Premium to view full insights';
+      premiumSec.parentNode.appendChild(overlay);
+    }
+  }
+
+  // Premium toggle & payment modal
+  const premiumToggle = document.getElementById('premium-toggle');
+  if (user.isPremium) premiumToggle.checked = true;
+  premiumToggle.addEventListener('change', () => {
+    if (premiumToggle.checked && !user.isPremium) {
+      document.getElementById('payment-modal-backdrop').style.display = 'flex';
+    } else if (!premiumToggle.checked && user.isPremium) {
+      user.isPremium = false;
+      localStorage.setItem('vostolaUser', JSON.stringify(user));
+      location.reload();
+    }
+  });
+  document.getElementById('payment-form').addEventListener('submit', e => {
+    e.preventDefault();
+    user.isPremium = true;
+    localStorage.setItem('vostolaUser', JSON.stringify(user));
+    document.getElementById('payment-modal-backdrop').style.display = 'none';
+    location.reload();
+  });
+  document.getElementById('payment-cancel').addEventListener('click', () => {
+    premiumToggle.checked = false;
+    document.getElementById('payment-modal-backdrop').style.display = 'none';
+  });
+
+  // Nav toggle (if used)
+  document.getElementById('nav-toggle')?.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('open');
+  });
+</script>
+
 
 </body>
 </html>
